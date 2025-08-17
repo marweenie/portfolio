@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marwa Chbeir - Software Developer</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
     <style>
         * {
             margin: 0;
@@ -18,6 +27,49 @@
             color: #1a1a1a;
             background: #ffffff;
             overflow-x: hidden;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-logo {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #f0f0f0;
+            border-top: 2px solid #1a1a1a;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Navigation */
@@ -406,9 +458,91 @@
 
         /* Contact Section */
         .contact-container {
-            text-align: center;
             max-width: 600px;
             margin: 0 auto;
+        }
+
+        .contact-form {
+            background: #fafafa;
+            padding: 3rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1a1a1a;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-submit {
+            background: #1a1a1a;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .form-submit:hover {
+            background: #333;
+        }
+
+        .form-submit:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .form-status {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+            display: none;
+        }
+
+        .form-status.success {
+            background: #e8f5e8;
+            color: #2d5a2d;
+            border: 1px solid #c3e6c3;
+        }
+
+        .form-status.error {
+            background: #ffeaea;
+            color: #c53030;
+            border: 1px solid #fed7d7;
         }
 
         .contact-links {
@@ -576,6 +710,12 @@
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">Marwa Chbeir</div>
+        <div class="loading-spinner"></div>
+    </div>
+
     <!-- Scroll Progress Bar -->
     <div class="scroll-progress" id="scrollProgress"></div>
     
@@ -833,9 +973,32 @@
     <section id="contact" class="section fade-up">
         <div class="section-header">
             <h2 class="section-title">Get In Touch</h2>
-            <p class="section-subtitle">I'm always interested in new opportunities and collaborations.</p>
+            <p class="section-subtitle">I'm always interested in new opportunities and collaborations. Let's connect!</p>
         </div>
         <div class="contact-container">
+            <!-- Contact Form -->
+            <form class="contact-form" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="Tell me about your project or opportunity..." required></textarea>
+                </div>
+                <button type="submit" class="form-submit" id="submitBtn">Send Message</button>
+                <div class="form-status" id="formStatus"></div>
+            </form>
+
+            <!-- Alternative Contact Links -->
             <div class="contact-links">
                 <a href="mailto:mzchbeir@gmail.com" class="contact-link">Email</a>
                 <a href="https://www.linkedin.com/in/marwa-chbeir" target="_blank" class="contact-link">LinkedIn</a>
@@ -853,6 +1016,65 @@
     <a href="#" class="back-to-top" id="backToTop">↑</a>
 
     <script>
+        // Loading Screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+            }, 1500); // Show loading for 1.5 seconds
+        });
+
+        // Contact Form Handling
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const form = e.target;
+            const submitBtn = document.getElementById('submitBtn');
+            const status = document.getElementById('formStatus');
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            status.style.display = 'none';
+            
+            try {
+                const formData = new FormData(form);
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    // Success
+                    status.className = 'form-status success';
+                    status.textContent = 'Thank you! Your message has been sent successfully.';
+                    status.style.display = 'block';
+                    form.reset();
+                    
+                    // Track form submission in Google Analytics
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'form_submit', {
+                            'event_category': 'Contact',
+                            'event_label': 'Contact Form'
+                        });
+                    }
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                // Error
+                status.className = 'form-status error';
+                status.textContent = 'Sorry, there was an error sending your message. Please try again or contact me directly.';
+                status.style.display = 'block';
+            }
+            
+            // Reset button state
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Send Message';
+        });
+
         // Scroll Progress Bar
         function updateScrollProgress() {
             const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -890,6 +1112,15 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
+                    
+                    // Track section views in Google Analytics
+                    if (typeof gtag !== 'undefined') {
+                        const sectionId = entry.target.id || 'unknown';
+                        gtag('event', 'scroll', {
+                            'event_category': 'Engagement',
+                            'event_label': `Section: ${sectionId}`
+                        });
+                    }
                 }
             });
         }, observerOptions);
@@ -916,13 +1147,13 @@
             type();
         }
 
-        // Initialize typing animation when page loads
-        window.addEventListener('load', () => {
+        // Initialize typing animation when loading is complete
+        setTimeout(() => {
             const heroTitle = document.querySelector('.hero-content h1');
             if (heroTitle) {
                 typeWriter(heroTitle, 'Software Developer', 150);
             }
-        });
+        }, 1600);
 
         // Mobile menu functionality
         let mobileMenuOpen = false;
@@ -987,6 +1218,28 @@
             const hero = document.querySelector('.hero');
             if (hero) {
                 hero.style.transform = `translateY(${scrolled * 0.1}px)`;
+            }
+        });
+
+        // Track outbound links in Google Analytics
+        document.querySelectorAll('a[href^="http"], a[href^="mailto:"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'click', {
+                        'event_category': 'Outbound Link',
+                        'event_label': e.target.href
+                    });
+                }
+            });
+        });
+
+        // Track page load time
+        window.addEventListener('load', () => {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'timing_complete', {
+                    'name': 'load',
+                    'value': Math.round(performance.now())
+                });
             }
         });
     </script>
