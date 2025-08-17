@@ -12,20 +12,68 @@
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-YLCTWX3N9S');
+        
+        // Replace GA_MEASUREMENT_ID with your actual ID like G-ABC123XYZ
+        gtag('config', 'G-YLCTWX3N9S', {
+            page_title: 'Marwa Chbeir - Portfolio',
+            custom_map: {'custom_parameter': 'custom_value'}
+        });
+        
+        // Test event to verify it's working
+        gtag('event', 'page_view', {
+            page_title: 'Portfolio Loaded',
+            page_location: window.location.href
+        });
     </script>
     <style>
+        :root {
+            /* Light mode colors */
+            --bg-primary: #ffffff;
+            --bg-secondary: #fafafa;
+            --bg-tertiary: #f8f9fa;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666;
+            --text-tertiary: #333;
+            --border-color: #e5e5e5;
+            --border-hover: #d0d0d0;
+            --accent-color: #1a1a1a;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --card-bg: #ffffff;
+            --form-bg: #fafafa;
+            --skill-bg: #fafafa;
+            --skill-hover: #f0f0f0;
+        }
+
+        [data-theme="dark"] {
+            /* Dark mode colors */
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #222;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --text-tertiary: #e0e0e0;
+            --border-color: #333;
+            --border-hover: #444;
+            --accent-color: #ffffff;
+            --nav-bg: rgba(15, 15, 15, 0.95);
+            --card-bg: #1a1a1a;
+            --form-bg: #222;
+            --skill-bg: #222;
+            --skill-hover: #2a2a2a;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             line-height: 1.6;
-            color: #1a1a1a;
-            background: #ffffff;
+            color: var(--text-primary);
+            background: var(--bg-primary);
             overflow-x: hidden;
         }
 
@@ -99,6 +147,12 @@
             letter-spacing: -0.02em;
         }
 
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
         .nav-links {
             display: flex;
             gap: 3rem;
@@ -140,6 +194,7 @@
             align-items: center;
             padding: 0 2rem;
             position: relative;
+            background: var(--bg-primary);
         }
 
         .hero-container {
@@ -153,17 +208,33 @@
         }
 
         .hero-content h1 {
-            font-size: clamp(3rem, 5vw, 4.5rem);
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
             font-weight: 700;
             line-height: 1.1;
             margin-bottom: 2rem;
             letter-spacing: -0.02em;
-            color: #1a1a1a;
+            color: var(--text-primary);
+            min-height: 1.2em;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Ensure text doesn't disappear during typing animation */
+        .hero-content h1::after {
+            content: '';
+            display: inline-block;
+            width: 0;
+        }
+
+        /* Fallback if typing animation fails */
+        .hero-content h1:empty::before {
+            content: 'Software Developer';
+            opacity: 0.8;
         }
 
         .hero-content .subtitle {
             font-size: 1.25rem;
-            color: #666;
+            color: var(--text-secondary);
             margin-bottom: 3rem;
             line-height: 1.6;
             font-weight: 400;
@@ -176,24 +247,24 @@
         }
 
         .btn-primary {
-            background: #1a1a1a;
-            color: white;
+            background: var(--accent-color);
+            color: var(--bg-primary);
             padding: 1rem 2rem;
             text-decoration: none;
             border-radius: 6px;
             font-weight: 500;
             font-size: 0.95rem;
             transition: all 0.2s ease;
-            border: 1px solid #1a1a1a;
+            border: 1px solid var(--accent-color);
         }
 
         .btn-primary:hover {
             background: transparent;
-            color: #1a1a1a;
+            color: var(--accent-color);
         }
 
         .btn-secondary {
-            color: #666;
+            color: var(--text-secondary);
             text-decoration: none;
             font-weight: 500;
             font-size: 0.95rem;
@@ -201,7 +272,7 @@
         }
 
         .btn-secondary:hover {
-            color: #1a1a1a;
+            color: var(--text-primary);
         }
 
         .hero-image {
@@ -239,11 +310,12 @@
             font-weight: 600;
             margin-bottom: 1rem;
             letter-spacing: -0.02em;
+            color: var(--text-primary);
         }
 
         .section-subtitle {
             font-size: 1.1rem;
-            color: #666;
+            color: var(--text-secondary);
             max-width: 600px;
         }
 
@@ -259,14 +331,14 @@
             font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 1.5rem;
-            color: #1a1a1a;
+            color: var(--text-primary);
         }
 
         .info-item {
             display: flex;
             justify-content: space-between;
             padding: 0.75rem 0;
-            border-bottom: 1px solid #f0f0f0;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .info-item:last-child {
@@ -275,18 +347,18 @@
 
         .info-label {
             font-weight: 500;
-            color: #666;
+            color: var(--text-secondary);
         }
 
         .info-value {
             font-weight: 500;
-            color: #1a1a1a;
+            color: var(--text-primary);
         }
 
         .about-text {
             font-size: 1.1rem;
             line-height: 1.8;
-            color: #333;
+            color: var(--text-tertiary);
         }
 
         .about-text p {
@@ -302,13 +374,15 @@
 
         .experience-item {
             padding: 3rem;
-            background: #fafafa;
+            background: var(--bg-secondary);
             border-radius: 12px;
             transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
         }
 
         .experience-item:hover {
-            background: #f5f5f5;
+            background: var(--bg-tertiary);
+            border-color: var(--border-hover);
         }
 
         .exp-header {
@@ -321,23 +395,23 @@
         .exp-title {
             font-size: 1.3rem;
             font-weight: 600;
-            color: #1a1a1a;
+            color: var(--text-primary);
             margin-bottom: 0.25rem;
         }
 
         .exp-company {
-            color: #666;
+            color: var(--text-secondary);
             font-weight: 500;
         }
 
         .exp-period {
             text-align: right;
-            color: #666;
+            color: var(--text-secondary);
             font-size: 0.9rem;
         }
 
         .exp-description {
-            color: #555;
+            color: var(--text-tertiary);
             line-height: 1.7;
         }
 
@@ -356,7 +430,7 @@
             content: '→';
             position: absolute;
             left: 0;
-            color: #999;
+            color: var(--text-secondary);
         }
 
         /* Projects Section */
@@ -367,17 +441,21 @@
         }
 
         .project-card {
-            background: white;
-            border: 1px solid #e5e5e5;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 2.5rem;
             transition: all 0.3s ease;
         }
 
         .project-card:hover {
-            border-color: #d0d0d0;
+            border-color: var(--border-hover);
             transform: translateY(-4px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] .project-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .project-header {
@@ -391,16 +469,16 @@
         }
 
         .project-title a {
-            color: #1a1a1a;
+            color: var(--text-primary);
             text-decoration: none;
         }
 
         .project-title a:hover {
-            color: #666;
+            color: var(--text-secondary);
         }
 
         .project-description {
-            color: #555;
+            color: var(--text-tertiary);
             line-height: 1.7;
             margin-bottom: 2rem;
         }
@@ -412,12 +490,19 @@
         }
 
         .tech-tag {
-            background: #f0f0f0;
-            color: #666;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
             padding: 0.4rem 0.8rem;
             border-radius: 4px;
             font-size: 0.85rem;
             font-weight: 500;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .tech-tag:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--border-hover);
         }
 
         /* Skills Section */
@@ -595,8 +680,26 @@
                 padding: 1rem;
             }
 
+            .nav-right {
+                gap: 1rem;
+            }
+
             .nav-links {
                 gap: 1.5rem;
+            }
+
+            .theme-toggle {
+                width: 60px;
+                height: 30px;
+            }
+
+            .theme-toggle-circle {
+                width: 24px;
+                height: 24px;
+            }
+
+            [data-theme="dark"] .theme-toggle-circle {
+                transform: translateX(30px);
             }
 
             .hero {
@@ -608,7 +711,8 @@
             }
 
             .hero-content h1 {
-                font-size: 2.5rem;
+                font-size: clamp(2rem, 8vw, 2.5rem);
+                min-height: 1.5em;
             }
 
             .profile-photo {
@@ -629,7 +733,16 @@
 
             .cta-group {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .contact-form {
+                padding: 2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -723,13 +836,20 @@
     <nav class="nav">
         <div class="nav-container">
             <div class="logo">Marwa Chbeir</div>
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <div class="theme-toggle-circle">
+                        <span class="theme-toggle-icon">🌙</span>
+                    </div>
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -737,7 +857,7 @@
     <section class="hero">
         <div class="hero-container">
             <div class="hero-content">
-                <h1>Software Developer</h1>
+                <h1 id="heroTitle">Software Developer</h1>
                 <p class="subtitle">I build cutting-edge Android applications and full-stack systems that solve real-world problems through creative problem-solving and innovative technology.</p>
                 <div class="cta-group">
                     <a href="#projects" class="btn-primary">View My Work</a>
@@ -1016,6 +1136,38 @@
     <a href="#" class="back-to-top" id="backToTop">↑</a>
 
     <script>
+        // Dark Mode Toggle
+        let isDarkMode = false;
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.querySelector('.theme-toggle-icon');
+        
+        function setTheme(dark) {
+            isDarkMode = dark;
+            if (isDarkMode) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                themeIcon.textContent = '🌙';
+            }
+            
+            // Track theme changes in Google Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'theme_change', {
+                    'event_category': 'UI',
+                    'event_label': isDarkMode ? 'Dark Mode' : 'Light Mode'
+                });
+            }
+        }
+        
+        // Initialize theme (default to light mode)
+        setTheme(false);
+        
+        // Theme toggle event listener
+        themeToggle.addEventListener('click', () => {
+            setTheme(!isDarkMode);
+        });
+
         // Loading Screen
         window.addEventListener('load', () => {
             setTimeout(() => {
@@ -1131,6 +1283,8 @@
 
         // Typing animation for hero title
         function typeWriter(element, text, speed = 100) {
+            if (!element) return;
+            
             let i = 0;
             element.innerHTML = '';
             element.classList.add('typing-animation');
@@ -1149,11 +1303,31 @@
 
         // Initialize typing animation when loading is complete
         setTimeout(() => {
-            const heroTitle = document.querySelector('.hero-content h1');
+            const heroTitle = document.getElementById('heroTitle');
             if (heroTitle) {
-                typeWriter(heroTitle, 'Software Developer', 150);
+                // Check if screen is too small for typing animation
+                if (window.innerWidth < 768) {
+                    // Just set the text directly on mobile
+                    heroTitle.textContent = 'Software Developer';
+                } else {
+                    // Use typing animation on larger screens
+                    typeWriter(heroTitle, 'Software Developer', 150);
+                }
             }
         }, 1600);
+
+        // Handle window resize - ensure text is always visible
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                const heroTitle = document.getElementById('heroTitle');
+                if (heroTitle && (!heroTitle.textContent || heroTitle.textContent.trim() === '')) {
+                    heroTitle.textContent = 'Software Developer';
+                    heroTitle.classList.remove('typing-animation');
+                }
+            }, 250);
+        });
 
         // Mobile menu functionality
         let mobileMenuOpen = false;
@@ -1169,7 +1343,8 @@
                     border: none;
                     font-size: 1.5rem;
                     cursor: pointer;
-                    color: #1a1a1a;
+                    color: var(--text-primary);
+                    margin-right: 1rem;
                 `;
                 
                 menuBtn.addEventListener('click', () => {
@@ -1180,12 +1355,28 @@
                     navLinks.style.top = '100%';
                     navLinks.style.left = '0';
                     navLinks.style.right = '0';
-                    navLinks.style.background = 'white';
+                    navLinks.style.background = 'var(--nav-bg)';
                     navLinks.style.padding = '2rem';
-                    navLinks.style.borderTop = '1px solid #e5e5e5';
+                    navLinks.style.borderTop = '1px solid var(--border-color)';
+                    navLinks.style.backdropFilter = 'blur(20px)';
                 });
                 
-                document.querySelector('.nav-container').appendChild(menuBtn);
+                // Insert before the theme toggle
+                const navRight = document.querySelector('.nav-right');
+                navRight.insertBefore(menuBtn, themeToggle);
+            } else if (window.innerWidth > 768) {
+                // Remove mobile menu button on larger screens
+                const mobileBtn = document.querySelector('.mobile-menu-btn');
+                if (mobileBtn) {
+                    mobileBtn.remove();
+                }
+                // Reset nav links styling
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'row';
+                navLinks.style.position = 'static';
+                navLinks.style.background = 'transparent';
+                navLinks.style.padding = '0';
+                navLinks.style.border = 'none';
             }
         }
 
